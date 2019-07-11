@@ -2,8 +2,8 @@ package com.thoughtworks.collection;
 
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class MyMap {
 
@@ -17,11 +17,19 @@ public class MyMap {
     }
 
     public List<Integer> getTriple() {
-        throw new NotImplementedException();
+        List<Integer>res=new ArrayList();
+        for(Integer a:array){
+            res.add(a*3);
+        }
+        return  res;
     }
 
     public List<String> mapLetter() {
-        throw new NotImplementedException();
+        List<String>res=new ArrayList();
+        for(Integer a:array){
+            res.add(String.valueOf((char)(a+96)));
+        }
+        return res;
     }
 
     public List<String> mapLetters() {
@@ -29,10 +37,30 @@ public class MyMap {
     }
 
     public List<Integer> sortFromBig() {
-        throw new NotImplementedException();
+        int temp;
+        for(int i=0;i<array.size();i++){
+            for(int j=i+1;j<array.size();j++){
+                if(array.get(i)<array.get(j)){
+                    temp=array.get(i);
+                    array.set(i,array.get(j));
+                    array.set(j,temp);
+                }
+            }
+        }
+        return array;
     }
 
     public List<Integer> sortFromSmall() {
-        throw new NotImplementedException();
+        int temp;
+        for(int i=0;i<array.size();i++){
+            for(int j=i+1;j<array.size();j++){
+                if(array.get(i)>array.get(j)){
+                    temp=array.get(i);
+                    array.set(i,array.get(j));
+                    array.set(j,temp);
+                }
+            }
+        }
+        return array;
     }
 }
