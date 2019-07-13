@@ -3,50 +3,32 @@ package com.thoughtworks.collection;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class CollectionOperator {
     public List<Integer> getListByInterval(int left, int right) {
-        List<Integer>res=new ArrayList();
-        if(left<right)
-            while (left<=right){
-                res.add(left);
-                left++;
-            }
-        else{
-            while (left>=right){
-                res.add(left);
-                left--;
-            }
-        }
-        return res;
+        List<Integer> arrayList = IntStream.rangeClosed(right, left).boxed().collect(Collectors.toList());
+        Collections.reverse(arrayList);
+        return left < right ?
+                IntStream.rangeClosed(left, right).boxed().collect(Collectors.toList()) :
+                arrayList;
     }
 
     public List<Integer> getEvenListByIntervals(int left, int right) {
-        List<Integer>res=new ArrayList();
-        if(left<right)
-            while (left<=right){
-                if(left%2==0)
-                res.add(left);
-                left++;
-            }
-        else{
-            while (left>=right){
-                if(left%2==0)
-                res.add(left);
-                left--;
-            }
-        }
-        return res;
+        List<Integer> arrayList = IntStream.rangeClosed(right, left).filter(i->i%2==0).boxed().collect(Collectors.toList());
+        Collections.reverse(arrayList);
+        return left < right ?
+                IntStream.rangeClosed(left, right).filter(i->i%2==0).boxed().collect(Collectors.toList()) :
+                arrayList;
+
     }
 
     public List<Integer> popEvenElments(int[] array) {
-        List<Integer>res=new ArrayList();
-        for(int i=0;i<array.length;i++){
-            if(array[i]%2==0)
-                res.add(array[i]);
-        }
-        return res;
+       return Arrays.stream(array).filter(i->i%2==0).boxed().collect(Collectors.toList());
     }
 
     public int popLastElment(int[] array) {

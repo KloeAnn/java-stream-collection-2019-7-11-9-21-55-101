@@ -3,6 +3,7 @@ package com.thoughtworks.collection;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.util.*;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 public class MyMap {
@@ -17,19 +18,12 @@ public class MyMap {
     }
 
     public List<Integer> getTriple() {
-        List<Integer>res=new ArrayList();
-        for(Integer a:array){
-            res.add(a*3);
-        }
-        return  res;
+        return array.stream().mapToInt(Integer::intValue).map(i->i*3).boxed().collect(Collectors.toList());
     }
 
     public List<String> mapLetter() {
-        List<String>res=new ArrayList();
-        for(Integer a:array){
-            res.add(String.valueOf((char)(a+96)));
-        }
-        return res;
+        throw new NotImplementedException();
+        //return array.stream().mapToInt(Integer::intValue).map(i->Integer.valueOf((char)(i+48))).boxed().collect(Collectors.toList());
     }
 
     public List<String> mapLetters() {
@@ -37,30 +31,14 @@ public class MyMap {
     }
 
     public List<Integer> sortFromBig() {
-        int temp;
-        for(int i=0;i<array.size();i++){
-            for(int j=i+1;j<array.size();j++){
-                if(array.get(i)<array.get(j)){
-                    temp=array.get(i);
-                    array.set(i,array.get(j));
-                    array.set(j,temp);
-                }
-            }
-        }
-        return array;
+        List<Integer>res=array.stream().sorted().collect(Collectors.toList());
+        Collections.reverse(res);
+        System.out.println(res);
+        return res;
     }
 
     public List<Integer> sortFromSmall() {
-        int temp;
-        for(int i=0;i<array.size();i++){
-            for(int j=i+1;j<array.size();j++){
-                if(array.get(i)>array.get(j)){
-                    temp=array.get(i);
-                    array.set(i,array.get(j));
-                    array.set(j,temp);
-                }
-            }
-        }
-        return array;
+        return array.stream().sorted().collect(Collectors.toList());
+
     }
 }

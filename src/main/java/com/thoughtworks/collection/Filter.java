@@ -2,7 +2,10 @@ package com.thoughtworks.collection;
 
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
+import java.lang.reflect.Array;
 import java.util.*;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 public class Filter {
 
@@ -13,38 +16,21 @@ public class Filter {
     }
 
     public List<Integer> filterEven() {
-        List<Integer>res=new ArrayList();
-        for(int a:array){
-            if(a%2==0)
-                res.add(a);
-        }
-        return  res;
+        return  array.stream().mapToInt(Integer::byteValue).filter(i->i%2==0).boxed().collect(Collectors.toList());
     }
 
     public List<Integer> filterMultipleOfThree() {
-        List<Integer>res=new ArrayList();
-        for(int a:array){
-            if(a%3==0)
-                res.add(a);
-        }
-        return  res;
+        return  array.stream().mapToInt(Integer::byteValue).filter(i->i%3==0).boxed().collect(Collectors.toList());
     }
 
     public List<Integer> getCommonElements(List<Integer> firstList, List<Integer> secondList) {
-        List<Integer>res=new ArrayList();
-        for(int i=0;i<firstList.size();i++){
-            for(int j=0;j<secondList.size();j++){
-                if(firstList.get(i)==secondList.get(j)){
-                    res.add(firstList.get(i));
-                }
-            }
-        }
-        return res;
+        Set<Integer>set1=new HashSet<>(firstList);
+        Set<Integer>set2=new HashSet<>(firstList);
+        return set1.stream().filter(i->set2.stream().mapToInt(Integer::byteValue).filter(j->j==i).boxed().collect(Collectors.toList()).size()!=0).collect(Collectors.toList());
+
     }
 
     public List<Integer> getDifferentElements() {
-        Set set=new HashSet(array);
-        List<Integer> resList= new ArrayList<>(set);
-        return resList;
+        return new ArrayList<>(array.stream().collect(Collectors.toSet()));
     }
 }
